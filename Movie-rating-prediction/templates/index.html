@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Rating Prediction</title>
+</head>
+<body>
+    <h1>Predict Movie Rating</h1>
+    <form action="/predict" method="post">
+        <label for="Year">Year:</label>
+        <input type="number" id="Year" name="Year" required><br><br>
+
+        <label for="Votes">Votes:</label>
+        <input type="number" id="Votes" name="Votes" step="any" required><br><br>
+
+        <label for="Duration">Duration (in minutes):</label>
+        <input type="number" id="Duration" name="Duration" required><br><br>
+
+        <label for="Genre">Genre:</label>
+        <input type="text" id="Genre" name="Genre" required><br><br>
+
+        <label for="Director">Director:</label>
+        <input type="text" id="Director" name="Director" required><br><br>
+
+        <label for="Actor1">Actor 1:</label>
+        <input type="text" id="Actor1" name="Actor1" required><br><br>
+
+        <label for="Actor2">Actor 2:</label>
+        <input type="text" id="Actor2" name="Actor2" required><br><br>
+
+        <label for="Actor3">Actor 3:</label>
+        <input type="text" id="Actor3" name="Actor3" required><br><br>
+
+        <input type="submit" value="Predict">
+    </form>
+    <a href="/data" target="_blank">View Movie Data</a>
+
+</body>
+</html>
