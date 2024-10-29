@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rock Paper Scissors Game</title>
+    <style>
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 20px;
+      }
+      .game-area {
+        margin: 20px 0;
+      }
+      #video-feed {
+        border: 2px solid #333;
+        border-radius: 10px;
+      }
+      .button {
+        padding: 10px 20px;
+        font-size: 18px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px;
+      }
+      .result-area {
+        margin-top: 20px;
+        font-size: 24px;
+      }
+      .instructions {
+        margin: 20px 0;
+        padding: 15px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Rock Paper Scissors Game</h1>
+
+      <div class="instructions">
+        <h3>Instructions:</h3>
+        <p>1. Click "Start Game" to begin</p>
+        <p>2. Show your hand gesture (rock, paper, or scissors)</p>
+        <u><p>3. Kindly hold your gesture for a moment</p></u>
+      </div>
+
+      <div class="game-area">
+        <img
+          id="video-feed"
+          src="{{ url_for('video_feed') }}"
+          width="640"
+          height="480"
+        />
+      </div>
+
+      <button id="startButton" class="button" onclick="startGame()">
+        Start Game
+      </button>
+      <div class="result-area" id="result"></div>
+    </div>
+
+    <script>
+      let gameInProgress = false;
+      function startGame() {
+        if (gameInProgress) return;
+
+        gameInProgress = true;
+        document.getElementById("startButton").disabled = true;
+        document.getElementById("result").innerHTML =
+          "Show your hand gesture now...";
+
+        fetch("/start_game")
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Game started:", data);
+            setTimeout(getResult, 5000); // Wait 5 seconds before getting the result
+          });
+      }
+
+      function getResult() {
+        fetch("/get_result")
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Game result:", data);
+            let resultText = `Result: ${data.result}<br>`;
+            resultText += `Your move: ${data.player_move}<br>`;
+            resultText += `Computer's move: ${data.computer_move}`;
+            document.getElementById("result").innerHTML = resultText;
+
+            gameInProgress = false;
+            document.getElementById("startButton").disabled = false;
+          });
+      }
+    </script>
+  </body>
+</html>
